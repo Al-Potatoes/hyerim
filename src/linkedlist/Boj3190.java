@@ -40,7 +40,7 @@ public class Boj3190 {
 
     int[] dx = {0, 1, 0, -1};  // x방향
     int[] dy = {1, 0, -1, 0};  // y방향
-    int dir = 1;  // (0: 아래, 1: 오른쪽, 2: 위, 4: 왼쪽)
+    int dir = 0;  // (0: 오른쪽, 1: 아래, 2: 왼쪽, 3: 위)
 
     int time = 0;
     while (true) {
