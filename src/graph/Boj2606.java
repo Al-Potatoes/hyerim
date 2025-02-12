@@ -49,3 +49,60 @@ public class Boj2606 {
 }
 
 // 시간 104ms
+
+/*
+package graph;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class Boj2606 {
+    static List<List<Integer>> graph;
+    static boolean[] visited;
+    static int N;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        N = Integer.parseInt(br.readLine());
+        int M = Integer.parseInt(br.readLine());
+
+        graph = new ArrayList<>();
+        for (int i = 0; i <= N; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        visited = new boolean[N + 1];
+        for (int i = 0; i < M; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            graph.get(u).add(v);
+            graph.get(v).add(u);
+        }
+
+        System.out.println(BFS(1) - 1);
+    }
+
+    public static int BFS(int V) {
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(V);
+        visited[V] = true;
+        int cnt = 0;
+
+        while (!q.isEmpty()) {
+            int nodeIdx = q.poll();
+            cnt++;
+
+            for (int neighbor : graph.get(nodeIdx)) {
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true;
+                    q.offer(neighbor);
+                }
+            }
+        }
+        return cnt;
+    }
+}
+ */
