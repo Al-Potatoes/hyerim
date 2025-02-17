@@ -18,18 +18,17 @@ public class Boj28066 {
     for(int i=1;i<=N;i++){
       q.add(i);
     }
-    while(!q.isEmpty()){
-      int start=q.poll();
-      for(int i=0;i<K-1;i++){
-        if(q.isEmpty()){
-          System.out.println(start);
-          return;
+    while(q.size()>K){
+      for(int i=0;i<K;i++){
+        if(i==0){
+          q.offer(q.poll());
+        }else{
+          q.poll();
         }
-        q.poll();
       }
-      q.add(start);
     }
+    System.out.println(q.poll());
   }
 }
 
-// 시간 208ms
+// 시간 196ms
