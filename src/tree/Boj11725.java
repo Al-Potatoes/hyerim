@@ -47,3 +47,60 @@ public class Boj11725 {
 
   }
 }
+
+// 1200ms
+
+
+/*
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(br.readLine());
+
+        List<List<Integer>> adj = new ArrayList<>(N + 1);
+        for (int i = 0; i <= N; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < N - 1; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            adj.get(u).add(v);
+            adj.get(v).add(u);
+        }
+
+        int[] parent = new int[N + 1];
+        boolean[] visited = new boolean[N + 1];
+        Queue<Integer> q = new LinkedList<>();
+
+        q.offer(1);
+        visited[1] = true;
+
+        while (!q.isEmpty()) {
+            int curr = q.poll();
+            for (int nxt : adj.get(curr)) {
+                if (!visited[nxt]) {
+                    visited[nxt] = true;
+                    parent[nxt] = curr;
+                    q.offer(nxt);
+                }
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 2; i <= N; i++) {
+            sb.append(parent[i]).append('\n');
+        }
+
+        System.out.print(sb);
+    }
+}
+
+시간 596ms
+재귀(dfs) 안쓰고 sb 쓰니까 더 빠름
+ */
