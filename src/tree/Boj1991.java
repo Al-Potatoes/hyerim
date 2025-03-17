@@ -6,111 +6,68 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Boj1991 {
+  static int N; // 노드 개수
+  static Node[] tree;
 
   static class Node {
-
-    char data;
+    char a;
     Node left, right;
 
-    Node(char data) {
-      this.data = data;
-      this.left = null;
-      this.right = null;
+    Node(char a) {
+      this.a = a;
     }
   }
-
-  static class Tree {
-
-    Node root;
-
-    Tree() {
-      this.root = null;
-    }
-
-    void insertNode(Node parent, char leftN, char rightN) {
-      if (leftN != '.') {
-        parent.left = new Node(leftN);
-      }
-      if (rightN != '.') {
-        parent.right = new Node(rightN);
-      }
-    }
-
-    void preOrder(Node node) {
-      if (node == null) {
-        return;
-      }
-      System.out.print(node.data);
-      preOrder(node.left);
-      preOrder(node.right);
-    }
-
-    void inOrder(Node node) {
-      if (node == null) {
-        return;
-      }
-      inOrder(node.left);
-      System.out.print(node.data);
-      inOrder(node.right);
-    }
-
-    void postOrder(Node node) {
-      if (node == null) {
-        return;
-      }
-      postOrder(node.left);
-      postOrder(node.right);
-      System.out.print(node.data);
-    }
-
-    Node findNode(Node node, char data) {
-      if (node == null) {
-        return null;
-      }
-      if (node.data == data) {
-        return node;
-      }
-
-      Node found = findNode(node.left, data);
-      if (found == null) {
-        found = findNode(node.right, data);
-      }
-      return found;
-    }
-  }
-
   public static void main(String[] args) throws IOException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    int N = Integer.parseInt(br.readLine());
-    Tree tree = new Tree();
-
     StringTokenizer st = new StringTokenizer(br.readLine());
-    char root = st.nextToken().charAt(0);
-    char left = st.nextToken().charAt(0);
-    char right = st.nextToken().charAt(0);
 
-    tree.root = new Node(root);
-    tree.insertNode(tree.root, left, right);
+    N = Integer.parseInt(st.nextToken());
 
-    for (int i = 1; i < N; i++) {
+    tree = new Node[26];
+
+    for (int i = 0; i < N; i++) {
       st = new StringTokenizer(br.readLine());
-      root = st.nextToken().charAt(0);
-      left = st.nextToken().charAt(0);
-      right = st.nextToken().charAt(0);
+      char root = st.nextToken().charAt(0);
+      char left = st.nextToken().charAt(0);
+      char right = st.nextToken().charAt(0);
 
-      Node parent = tree.findNode(tree.root, root);
-      if (parent != null) {
-        tree.insertNode(parent, left, right);
-      }
+
+      if(tree[root - 'A'] == null) tree[root - 'A'] = new Node(root);
+      if(left != '.')tree[left - 'A'] = new Node(left);
+      if(right != '.')tree[right - 'A'] = new Node(right);
+
+      tree[root - 'A'].left = ( left=='.') ? null : tree[left-'A'];
+      tree[root - 'A'].right = ( right == '.') ? null : tree[right-'A'];
     }
 
-    tree.preOrder(tree.root);
+    preorder(tree[0]);
     System.out.println();
-    tree.inOrder(tree.root);
+    inorder(tree[0]);
     System.out.println();
-    tree.postOrder(tree.root);
+    postorder(tree[0]);
     System.out.println();
+  }
+
+  static void preorder(Node root) { // 전위 순회
+    if(root == null) return;
+    System.out.print(root.a);
+    preorder(root.left);
+    preorder(root.right);
+  }
+
+  static void inorder(Node root) {    // 중위 순회
+    if(root == null) return;
+    inorder(root.left);
+    System.out.print(root.a);
+    inorder(root.right);
+  }
+
+  static void postorder(Node root) {  // 후위 순회
+    if(root == null) return;
+    postorder(root.left);
+    postorder(root.right);
+    System.out.print(root.a);
   }
 }
 
-// 시간 100ms
+// 시간 104ms
