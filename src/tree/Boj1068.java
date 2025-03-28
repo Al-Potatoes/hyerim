@@ -58,4 +58,4 @@ public class Boj1068 {
   }
 }
 
-// 시간 116ms
+// 시간 104ms
