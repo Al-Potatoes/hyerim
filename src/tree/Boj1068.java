@@ -10,7 +10,6 @@ import java.util.StringTokenizer;
 public class Boj1068 {
 
   static List<Integer>[] tree;
-  static boolean[] visited;
   static int leafCnt = 0;
   static int deleteNode;
 
@@ -19,7 +18,6 @@ public class Boj1068 {
     int N = Integer.parseInt(br.readLine());
 
     tree = new List[N];
-    visited = new boolean[N];
     StringTokenizer st = new StringTokenizer(br.readLine());
     for (int i = 0; i < N; i++) {
       tree[i] = new ArrayList<>();
@@ -45,11 +43,10 @@ public class Boj1068 {
       return;
     }
 
-    visited[node] = true;
     int childCnt = 0;
 
     for (int child : tree[node]) {
-      if (!visited[child] && child != deleteNode) {
+      if (child != deleteNode) {
         childCnt++;
         dfs(child);
       }
