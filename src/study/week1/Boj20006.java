@@ -1,70 +1,77 @@
 package study.week1;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Boj20006 {
+    static class Player {
+        int level;
+        String nickname;
+
+        Player(int level, String nickname) {
+            this.level = level;
+            this.nickname = nickname;
+        }
+    }
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
         StringTokenizer st = new StringTokenizer(br.readLine());
+
         int p = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
-        ArrayList<Object[]> list = new ArrayList<>();
-        int roomCnt = 0;
-        int[] criteria = new int[p];
+
+        List<Player> players = new ArrayList<>();
         for (int i = 0; i < p; i++) {
             st = new StringTokenizer(br.readLine());
-            int l = Integer.parseInt(st.nextToken());
-            String n = st.nextToken();
+            int level = Integer.parseInt(st.nextToken());
+            String nick = st.nextToken();
+            players.add(new Player(level, nick));
+        }
 
+        ArrayList<Integer> firstLevels = new ArrayList<>();
+        ArrayList<ArrayList<Player>> rooms = new ArrayList<>();
+
+        for (Player player : players) {
             boolean joined = false;
-            for (int j = 0; j < roomCnt; j++) {
-                int targetIndex = j;
-                int count = (int) list.stream()
-                        .filter(a -> (int) a[0] == targetIndex)
-                        .count();
-                if (criteria[j] >= l - 10 && criteria[j] <= l + 10 && count < m) {
-                    list.add(new Object[]{j, l, n});
-                    //System.out.println(j+" "+l+" "+n+" ");
+            for (int i = 0; i < rooms.size(); i++) {
+                int firstLevel = firstLevels.get(i);
+                if (rooms.get(i).size() < m &&
+                    player.level >= firstLevel - 10 &&
+                    player.level <= firstLevel + 10) {
+                    rooms.get(i).add(player);
                     joined = true;
                     break;
                 }
             }
+
             if (!joined) {
-                criteria[roomCnt] = l;
-                //System.out.println(roomCnt+" "+l+" "+n+" ");
-                list.add(new Object[]{roomCnt++, l, n});
+                firstLevels.add(player.level);
+                ArrayList<Player> newRoom = new ArrayList<>();
+                newRoom.add(player);
+                rooms.add(newRoom);
             }
         }
 
-        for (int i = 0; i < roomCnt; i++) {
-            ArrayList<Object[]> current = new ArrayList<>();
-            int currentIdx = i;
-            for (Object[] player : list) {
-                if ((int) player[0] == currentIdx) {
-                    current.add(player);
-                }
-            }
-
-            if (current.size() == m) {
-                System.out.println("Started!");
+        for (ArrayList<Player> room : rooms) {
+            if (room.size() == m) {
+                sb.append("Started!\n");
             } else {
-                System.out.println("Waiting!");
+                sb.append("Waiting!\n");
             }
 
-            current.sort(Comparator.comparing(a -> (String) a[2]));
-            for (Object[] row : current) {
-                System.out.println(row[1] + " " + row[2]);
+            room.sort(Comparator.comparing(p1 -> p1.nickname));
+
+            for (Player p1 : room) {
+                sb.append(p1.level).append(" ").append(p1.nickname).append("\n");
             }
         }
+
+        System.out.print(sb);
     }
 }
 
 //TODO: (실버2) p만큼의 플에이어가 존재하며 한 방의 최대 인원은 m명이다. +-10까지만 입장 가능하고 아니라면 새로운 방을 생성하자
 // 첫 시도 메모리 21288KB / 시간 248ms
-
+// 리팩토링 후(sb 추가, player 클래스 생성) 메모리 14484KB / 시간 124ms
