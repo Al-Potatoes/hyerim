@@ -12,13 +12,13 @@ public class Boj1874 {
         Stack<Integer> stack = new Stack<>();
         StringBuilder sb = new StringBuilder();
         int n = Integer.parseInt(br.readLine());
-        int[] arr = new int[n + 1];
+        int[] arr = new int[n];
         for (int i = 0; i < n; i++) {
             arr[i] = Integer.parseInt(br.readLine());
         }
-        int idx = 0, popNum=1;
-        for (int i = 1; i <= n; i++) {
-            while (popNum<=n&&(stack.empty()||stack.peek() < arr[idx])) {
+        int idx = 0, popNum = 1;
+        while (idx < n) {
+            while (stack.empty() || stack.peek() < arr[idx]) {
                 stack.push(popNum++);
                 sb.append("+\n");
             }
@@ -36,3 +36,5 @@ public class Boj1874 {
         System.out.println(sb);
     }
 }
+
+// 메모리 27076KB 시간 308ms
