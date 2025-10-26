@@ -1,7 +1,9 @@
-package stack;
+package study.week2;
 
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Stack;
 
 public class Boj1874 {
 
@@ -34,11 +36,3 @@ public class Boj1874 {
         System.out.println(sb);
     }
 }
-
-/*
-TODO:
-1 2 3 4 5 6 7 8
-n개의 숫자 배열 순서에 맞게 pop을 해야 함
-1 2 5
-4 3 6
-*/
